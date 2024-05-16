@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C" filename="decode_ecdsa_signature.c"><comment type="block">/*
+ * decode_ecdsa_signature.c: Unit tests for decode ASN.1 ECDSA signature
+ *
+ * Copyright (C) 2022 Red Hat, Inc.
+ *
+ * Author: Veronika Hanulikova &lt;vhanulik@redhat.com&gt;
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */</comment>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"torture.h"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"libopensc/log.c"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"libopensc/asn1.c"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;cmocka.h&gt;</cpp:file></cpp:include>
+
+<function><type><specifier>static</specifier> <name>int</name></type> <name>setup</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><name>NULL</name></expr></init></decl>;</decl_stmt>
+
+	<expr_stmt><expr><call><name>sc_establish_context</name><argument_list>(<argument><expr><operator>&amp;</operator><name>ctx</name></expr></argument>, <argument><expr><literal type="string">"test"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><operator>*</operator><name>state</name> <operator>=</operator> <name>ctx</name></expr>;</expr_stmt>
+	<return>return <expr><literal type="number">0</literal></expr>;</return>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>int</name></type> <name>teardown</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+
+	<expr_stmt><expr><call><name>sc_release_context</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<return>return <expr><literal type="number">0</literal></expr>;</return>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_empty_rs</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">24</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x04</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x00</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">6</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator> <operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_valid_format</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name></type> <name><name>result</name><index>[<expr><literal type="number">2</literal></expr>]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x06</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">8</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><literal type="number">2</literal> <operator>*</operator> <name>fieldsize</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_memory_equal</name><argument_list>(<argument><expr><name>result</name></expr></argument>, <argument><expr><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_valid_format_leading00</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name></type> <name><name>result</name><index>[<expr><literal type="number">2</literal></expr>]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x07</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<while>while<condition>(<expr><name>true</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></while>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">9</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><literal type="number">2</literal> <operator>*</operator> <name>fieldsize</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_memory_equal</name><argument_list>(<argument><expr><name>result</name></expr></argument>, <argument><expr><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_valid_format_long_fieldsize</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">3</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">6</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name></type> <name><name>result</name><index>[<expr><literal type="number">6</literal></expr>]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x06</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">9</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">6</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><literal type="number">2</literal> <operator>*</operator> <name>fieldsize</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_memory_equal</name><argument_list>(<argument><expr><name>result</name></expr></argument>, <argument><expr><name>out</name></expr></argument>, <argument><expr><literal type="number">6</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_wrong_tag_len</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x05</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">8</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_wrong_integer_tag_len</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x06</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">8</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_small_fieldsize</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">3</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x07</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x04</literal></expr>, <expr><literal type="number">0x05</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">9</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">3</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_long_leading00</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">3</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x07</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x00</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x04</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">10</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">3</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_missing_tag</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x20</literal></expr>, <expr><literal type="number">0x07</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x04</literal></expr>, <expr><literal type="number">0x05</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">9</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_missing_integer_tag</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>r</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>fieldsize</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>sc_context</name></name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><operator>*</operator><name>state</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>u8</name> <modifier>*</modifier></type><name>out</name> <init>= <expr><call><name>malloc</name><argument_list>(<argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>data</name><index>[]</index></name> <init>= <expr><block>{ <expr><literal type="number">0x30</literal></expr>, <expr><literal type="number">0x07</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x01</literal></expr>, <expr><literal type="number">0x03</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x02</literal></expr>, <expr><literal type="number">0x04</literal></expr>, <expr><literal type="number">0x05</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+
+	<if_stmt><if>if <condition>(<expr><operator>!</operator><name>out</name></expr>)</condition><block type="pseudo"><block_content>
+		<return>return;</return></block_content></block></if></if_stmt>
+
+	<expr_stmt><expr><name>r</name> <operator>=</operator> <call><name>sc_asn1_decode_ecdsa_signature</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>)</operator> <name>data</name></expr></argument>, <argument><expr><literal type="number">9</literal></expr></argument>, <argument><expr><name>fieldsize</name></expr></argument>, <argument><expr><operator>(</operator><name>u8</name> <operator>*</operator><operator>*</operator><operator>)</operator> <operator>&amp;</operator><name>out</name></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>r</name></expr></argument>, <argument><expr><name>SC_ERROR_INVALID_DATA</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>free</name><argument_list>(<argument><expr><name>out</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><name>int</name></type> <name>main</name><parameter_list>(<parameter><decl><type><name>void</name></type></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><specifier>const</specifier> <name><name>struct</name> <name>CMUnitTest</name></name></type> <name><name>tests</name><index>[]</index></name> <init>= <expr><block>{
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_empty_rs</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_valid_format</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_valid_format_leading00</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_valid_format_long_fieldsize</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_wrong_tag_len</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_wrong_integer_tag_len</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_small_fieldsize</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_long_leading00</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_missing_tag</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test_setup_teardown</name><argument_list>(<argument><expr><name>torture_missing_integer_tag</name></expr></argument>, <argument><expr><name>setup</name></expr></argument>, <argument><expr><name>teardown</name></expr></argument>)</argument_list></call></expr>,
+	}</block></expr></init></decl>;</decl_stmt>
+	<return>return <expr><call><name>cmocka_run_group_tests</name><argument_list>(<argument><expr><name>tests</name></expr></argument>, <argument><expr><name>NULL</name></expr></argument>, <argument><expr><name>NULL</name></expr></argument>)</argument_list></call></expr>;</return>
+</block_content>}</block></function>
+
+</unit>
