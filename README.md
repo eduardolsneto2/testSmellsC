@@ -3,7 +3,7 @@
 - [x] Conditional Test Logic
 - [ ] Constructor Initialization
 - [ ] Default Test
-- [ ] Duplicate Assert
+- [x] Duplicate Assert
 - [ ] Eager Test
 - [ ] Empty Test
 - [ ] Exception Handling
