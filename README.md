@@ -5,7 +5,7 @@
 - [ ] Default Test
 - [x] Duplicate Assert
 - [ ] Eager Test
-- [ ] Empty Test
+- [x] Empty Test
 - [ ] Exception Handling
 - [ ] General Fixture
 - [ ] Ignored Test

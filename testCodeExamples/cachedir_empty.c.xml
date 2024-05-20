@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C" filename="cachedir.c"><comment type="block">/*
+ * cachedir.c: Test various options how cache dir is evaluated
+ *
+ * Copyright (C) 2020 Red Hat, Inc.
+ *
+ * Author: Jakub Jelen &lt;jjelen@redhat.com&gt;
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */</comment>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;limits.h&gt;</cpp:file></cpp:include>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"torture.h"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"libopensc/opensc.h"</cpp:file></cpp:include>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_cachedir_default_empty_home</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+<comment type="line">//	sc_context_t *ctx = NULL;</comment>
+<comment type="line">//	char buf[PATH_MAX] = {0};</comment>
+<comment type="line">//	size_t buflen = sizeof(buf);</comment>
+<comment type="line">//	int rv;</comment>
+<comment type="line">//</comment>
+<comment type="line">//	rv = sc_establish_context(&amp;ctx, "cachedir");</comment>
+<comment type="line">//	assert_int_equal(rv, SC_SUCCESS);</comment>
+<comment type="line">//	assert_non_null(ctx);</comment>
+<comment type="line">//</comment>
+<comment type="line">//	/* Keep configuration empty */</comment>
+<comment type="line">//	setenv("OPENSC_CONF", "/nonexistent", 1);</comment>
+<comment type="line">//	setenv("XDG_CACHE_HOME", "", 1);</comment>
+<comment type="line">//	setenv("HOME", "", 1);</comment>
+<comment type="line">//</comment>
+<comment type="line">//	rv = sc_get_cache_dir(ctx, buf, buflen);</comment>
+<comment type="line">//	assert_int_equal(rv, SC_ERROR_INTERNAL);</comment>
+<comment type="line">//</comment>
+<comment type="line">//	sc_release_context(ctx);</comment>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_cachedir_default_empty</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>sc_context_t</name> <modifier>*</modifier></type><name>ctx</name> <init>= <expr><name>NULL</name></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>char</name></type> <name><name>buf</name><index>[<expr><name>PATH_MAX</name></expr>]</index></name> <init>= <expr><block>{<expr><literal type="number">0</literal></expr>}</block></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>size_t</name></type> <name>buflen</name> <init>= <expr><sizeof>sizeof<argument_list>(<argument><expr><name>buf</name></expr></argument>)</argument_list></sizeof></expr></init></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name>int</name></type> <name>rv</name></decl>;</decl_stmt>
+
+	<expr_stmt><expr><name>rv</name> <operator>=</operator> <call><name>sc_establish_context</name><argument_list>(<argument><expr><operator>&amp;</operator><name>ctx</name></expr></argument>, <argument><expr><literal type="string">"cachedir"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>rv</name></expr></argument>, <argument><expr><name>SC_SUCCESS</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_non_null</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<comment type="block">/* Keep configuration empty */</comment>
+	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"OPENSC_CONF"</literal></expr></argument>, <argument><expr><literal type="string">"/nonexistent"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"XDG_CACHE_HOME"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"HOME"</literal></expr></argument>, <argument><expr><literal type="string">"/home/test"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><name>rv</name> <operator>=</operator> <call><name>sc_get_cache_dir</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><name>buf</name></expr></argument>, <argument><expr><name>buflen</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>rv</name></expr></argument>, <argument><expr><name>SC_SUCCESS</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_string_equal</name><argument_list>(<argument><expr><name>buf</name></expr></argument>, <argument><expr><literal type="string">"/home/test/.cache/opensc"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+	<expr_stmt><expr><call><name>sc_release_context</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+</block_content>}</block></function>
+
+<function><type><specifier>static</specifier> <name>void</name></type> <name>torture_cachedir_default_cache_home</name><parameter_list>(<parameter><decl><type><name>void</name> <modifier>*</modifier><modifier>*</modifier></type><name>state</name></decl></parameter>)</parameter_list>
+<block>{<block_content>
+</block_content>}</block></function>
+
+
+<function><type><name>int</name></type> <name>main</name><parameter_list>(<parameter><decl><type><name>void</name></type></decl></parameter>)</parameter_list>
+<block>{<block_content>
+	<decl_stmt><decl><type><name>int</name></type> <name>rc</name></decl>;</decl_stmt>
+	<decl_stmt><decl><type><name><name>struct</name> <name>CMUnitTest</name></name></type> <name><name>tests</name><index>[]</index></name> <init>= <expr><block>{
+		<expr><call><name>cmocka_unit_test</name><argument_list>(<argument><expr><name>torture_cachedir_default_empty_home</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test</name><argument_list>(<argument><expr><name>torture_cachedir_default_empty</name></expr></argument>)</argument_list></call></expr>,
+		<expr><call><name>cmocka_unit_test</name><argument_list>(<argument><expr><name>torture_cachedir_default_cache_home</name></expr></argument>)</argument_list></call></expr>,
+	}</block></expr></init></decl>;</decl_stmt>
+
+	<expr_stmt><expr><name>rc</name> <operator>=</operator> <call><name>cmocka_run_group_tests</name><argument_list>(<argument><expr><name>tests</name></expr></argument>, <argument><expr><name>NULL</name></expr></argument>, <argument><expr><name>NULL</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<return>return <expr><name>rc</name></expr>;</return>
+</block_content>}</block></function>
+</unit>
