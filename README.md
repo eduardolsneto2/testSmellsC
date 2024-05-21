@@ -12,7 +12,7 @@
 - [ ] Lazy Test
 - [x] Magic Number Test
 - [ ] Mystery Guest
-- [ ] Redundant Print
+- [x] Redundant Print
 - [ ] Redundant Assertion
 - [ ] Resource Optimism
 - [ ] Sensitive Equality
