@@ -10,7 +10,7 @@
 - [ ] General Fixture
 - [ ] Ignored Test
 - [ ] Lazy Test
-- [ ] Magic Number Test
+- [x] Magic Number Test
 - [ ] Mystery Guest
 - [ ] Redundant Print
 - [ ] Redundant Assertion
