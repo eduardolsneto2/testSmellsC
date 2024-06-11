@@ -45,7 +45,7 @@
 
 	<expr_stmt><expr><name>rv</name> <operator>=</operator> <call><name>sc_get_cache_dir</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><name>buf</name></expr></argument>, <argument><expr><name>buflen</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 	<comment type="block">/* Keep configuration empty */</comment>
-	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>rv</name></expr></argument>, <argument><expr><name>SC_ERROR_INTERNAL</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>rv</name></expr></argument>, <argument><expr><name>rv</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
 	<expr_stmt><expr><call><name>sc_release_context</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 </block_content>}</block></function>

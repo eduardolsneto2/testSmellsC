@@ -2,7 +2,7 @@
 - [x] Assertion Roulette
 - [x] Conditional Test Logic
 - [ ] Constructor Initialization
-- [ ] Default Test
+- [x] ~~Default Test~~
 - [x] Duplicate Assert
 - [ ] Eager Test
 - [x] Empty Test
@@ -13,7 +13,7 @@
 - [x] Magic Number Test
 - [ ] Mystery Guest
 - [x] Redundant Print
-- [ ] Redundant Assertion
+- [x] Redundant Assertion
 - [ ] Resource Optimism
 - [ ] Sensitive Equality
 - [ ] Sleepy Test
