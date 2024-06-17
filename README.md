@@ -15,6 +15,6 @@
 - [x] Redundant Print
 - [x] Redundant Assertion
 - [ ] Resource Optimism
-- [ ] Sensitive Equality
-- [ ] Sleepy Test
+- [x] Sensitive Equality
+- [x] Sleepy Test
 - [x] Unknown Test

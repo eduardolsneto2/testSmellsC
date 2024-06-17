@@ -4,7 +4,7 @@ import xmlReader
 
 def assertRule(fileName):
     blocks = xmlReader.getCodeFromXmlFile(fileName)
-        print('---------')
+    print('---------')
     print('for File:' + fileName)
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
