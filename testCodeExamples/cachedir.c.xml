@@ -39,7 +39,7 @@
 	<expr_stmt><expr><call><name>assert_non_null</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
 	<comment type="block">/* Keep configuration empty */</comment>
-	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"OPENSC_CONF"</literal></expr></argument>, <argument><expr><literal type="string">"/nonexistent"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+	<expr_stmt><expr><call><name>longjmp</name><argument_list>(<argument><expr><literal type="string">"OPENSC_CONF"</literal></expr></argument>, <argument><expr><literal type="string">"/nonexistent"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"XDG_CACHE_HOME"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"HOME"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
