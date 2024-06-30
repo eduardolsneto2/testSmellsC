@@ -4,7 +4,7 @@
 - [ ] Constructor Initialization
 - [x] ~~Default Test~~
 - [x] Duplicate Assert
-- [ ] Eager Test
+- [x] Eager Test
 - [x] Empty Test
 - [x] Exception Handling
 - [ ] General Fixture

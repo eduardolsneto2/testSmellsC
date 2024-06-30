@@ -10,17 +10,17 @@ def assertRule(fileName):
        response = assertRuleForBlock(block)
        text = 'bloco ' + str(index)
        if response:
-            print(text + ' atende ao exception handling')
+            print(text + ' atende ao eager Test')
        else:
-            print(text + ' não atende ao exception handling')
+            print(text + ' não atende ao eager Test')
 
 def assertRuleForBlock(block):
-    hasExceptionStatement = False
+    numberOfAsserts = 0
     lines = block.find_all('expr_stmt')
-    allStatements = ['longjmp', 'setjmp', 'perror', 'strerror', 'stderr', 'error_at']
     for line in lines:
-        names = line.find_all('name')
-        for name in names:
-            if name.text in allStatements:
-                hasExceptionStatement = True
-    return not hasExceptionStatement
+        expressions = line.find_all('call')
+        for expression in expressions:
+            name = expression.find('name')
+            if 'assert' not in name.text:
+                numberOfAsserts += 1
+    return numberOfAsserts <= 1

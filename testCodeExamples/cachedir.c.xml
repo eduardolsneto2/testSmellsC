@@ -32,18 +32,10 @@
 	<decl_stmt><decl><type><name>size_t</name></type> <name>buflen</name> <init>= <expr><sizeof>sizeof<argument_list>(<argument><expr><name>buf</name></expr></argument>)</argument_list></sizeof></expr></init></decl>;</decl_stmt>
 	<decl_stmt><decl><type><name>int</name></type> <name>rv</name></decl>;</decl_stmt>
 
-	<expr_stmt><expr><name>rv</name> <operator>=</operator> <call><name>sc_establish_context</name><argument_list>(<argument><expr><operator>&amp;</operator><name>ctx</name></expr></argument>, <argument><expr><literal type="string">"cachedir"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
-	<comment type="block">/* Keep configuration empty */</comment>
 	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>rv</name></expr></argument>, <argument><expr><name>SC_SUCCESS</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 	<comment type="block">/* Keep configuration empty */</comment>
 	<expr_stmt><expr><call><name>assert_non_null</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
-	<comment type="block">/* Keep configuration empty */</comment>
-	<expr_stmt><expr><call><name>longjmp</name><argument_list>(<argument><expr><literal type="string">"OPENSC_CONF"</literal></expr></argument>, <argument><expr><literal type="string">"/nonexistent"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
-	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"XDG_CACHE_HOME"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
-	<expr_stmt><expr><call><name>setenv</name><argument_list>(<argument><expr><literal type="string">"HOME"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
-
-	<expr_stmt><expr><name>rv</name> <operator>=</operator> <call><name>sc_get_cache_dir</name><argument_list>(<argument><expr><name>ctx</name></expr></argument>, <argument><expr><name>buf</name></expr></argument>, <argument><expr><name>buflen</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 	<comment type="block">/* Keep configuration empty */</comment>
 	<expr_stmt><expr><call><name>assert_int_equal</name><argument_list>(<argument><expr><name>rv</name></expr></argument>, <argument><expr><name>rv</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
