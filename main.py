@@ -1,5 +1,5 @@
 from testTypesCode import assertionRoulette, conditionalTestLogic, duplicateAssert, emptyTest, magicNumber, redundantPrint, redundantAssertion, unknownTest
-from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eagerTest, lazyTest
+from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eagerTest, lazyTest, mysteryGuest
 
 # assertionRoulette.assertRule("cachedir.c.xml")
 # conditionalTestLogic.assertRule('decode_ecdsa_signature.c.xml')
@@ -13,4 +13,5 @@ from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eage
 # sleepyTest.assertRule("cachedir.c.xml")
 # exceptionHandling.assertRule("cachedir.c.xml")
 # eagerTest.assertRule("cachedir.c.xml")
-lazyTest.assertRule("cachedir_empty.c.xml")
+# lazyTest.assertRule("cachedir_empty.c.xml")
+mysteryGuest.assertRule("cachedir.c.xml")

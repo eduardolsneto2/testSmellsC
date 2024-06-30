@@ -11,7 +11,7 @@
 - [ ] Ignored Test
 - [x] Lazy Test
 - [x] Magic Number Test
-- [ ] Mystery Guest
+- [x] Mystery Guest
 - [x] Redundant Print
 - [x] Redundant Assertion
 - [ ] Resource Optimism
