@@ -9,7 +9,7 @@
 - [x] Exception Handling
 - [ ] General Fixture
 - [ ] Ignored Test
-- [ ] Lazy Test
+- [x] Lazy Test
 - [x] Magic Number Test
 - [ ] Mystery Guest
 - [x] Redundant Print

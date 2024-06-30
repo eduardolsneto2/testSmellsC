@@ -6,21 +6,23 @@ def assertRule(fileName):
     blocks = xmlReader.getCodeFromXmlFile(fileName)
     print('---------')
     print('for File:' + fileName)
+    allExpressions = []
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
-       text = 'bloco ' + str(index)
-       if response:
-            print(text + ' atende ao eager Test')
-       else:
-            print(text + ' não atende ao eager Test')
+       allExpressions = allExpressions + response
+    print(allExpressions)
+    if len(allExpressions) == len(set(allExpressions)):
+        print('atende ao lazy Test')
+    else:
+        print('não atende ao lazy Test')
 
 def assertRuleForBlock(block):
-    numberOfExpressions = 0
+    allExpressions = []
     lines = block.find_all('expr_stmt')
     for line in lines:
         expressions = line.find_all('call')
         for expression in expressions:
             name = expression.find('name')
             if 'assert' not in name.text:
-                numberOfExpressions += 1
-    return numberOfExpressions <= 1
+                allExpressions.append(name)
+    return allExpressions
