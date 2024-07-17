@@ -7,8 +7,8 @@
 - [x] Eager Test
 - [x] Empty Test
 - [x] Exception Handling
-- [ ] General Fixture
-- [ ] Ignored Test
+- [x] General Fixture
+- [x] ~~Ignored Test~~
 - [x] Lazy Test
 - [x] Magic Number Test
 - [x] Mystery Guest
