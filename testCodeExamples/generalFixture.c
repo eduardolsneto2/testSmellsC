@@ -24,7 +24,8 @@ static void torture_cachedir_default_empty_home(void **state)
 	char buf[PATH_MAX] = {0};
 	size_t buflen = sizeof(buf);
 	int rv;
-
+    struct stat buffer;   
+    fclose(file);
 	rv = sc_establish_context(&ctx, "cachedir");
 	assert_int_equal(rv, SC_SUCCESS);
 	assert_non_null(ctx);
@@ -46,7 +47,12 @@ static void torture_cachedir_default_empty(void **state)
 	char buf[PATH_MAX] = {0};
 	size_t buflen = sizeof(buf);
 	int rv;
-
+    if (access(fname, F_OK) == 0) {
+    // file exists
+    } else {
+        // file doesn't exist
+    }
+    fclose(file);
 	rv = sc_establish_context(&ctx, "cachedir");
 	assert_int_equal(rv, SC_SUCCESS);
 	assert_non_null(ctx);

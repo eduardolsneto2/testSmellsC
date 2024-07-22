@@ -1,5 +1,6 @@
 from testTypesCode import assertionRoulette, conditionalTestLogic, duplicateAssert, emptyTest, magicNumber, redundantPrint, redundantAssertion, unknownTest
-from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eagerTest, lazyTest, mysteryGuest, generalFixture
+from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eagerTest, lazyTest, mysteryGuest, generalFixture, constructorInitialization
+from testTypesCode import resourceOptimism
 
 # assertionRoulette.assertRule("cachedir.c.xml")
 # conditionalTestLogic.assertRule('decode_ecdsa_signature.c.xml')
@@ -15,5 +16,6 @@ from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eage
 # eagerTest.assertRule("cachedir.c.xml")
 # lazyTest.assertRule("cachedir_empty.c.xml")
 # mysteryGuest.assertRule("cachedir.c.xml")
-generalFixture.assertRule("generalFixture.c.xml")
-generalFixture.assertRule("cachedir.c.xml")
+# generalFixture.assertRule("generalFixture.c.xml")
+# constructorInitialization.assertRule('constructorInitialization.c.xml')
+resourceOptimism.assertRule('resourceOptimism.c.xml')

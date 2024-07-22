@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 def getBlocksFromXmlData(fileName):
     with open("./testCodeExamples/" +fileName, 'r') as f:
@@ -20,10 +20,23 @@ def getSetupBlock(fileName):
     with open("./testCodeExamples/" +fileName, 'r') as f:
         file = f.read() 
     soup = BeautifulSoup(file, 'xml')
-    # this needs to change since there could be blocks inside functions
     functions = soup.find_all('function')
     for function in functions:
         name = function.find('name', recursive=False)
         if 'setup' in name.text:
             return function.find('block_content')
     return False
+
+def getGlobalVariables(fileName):
+    with open("./testCodeExamples/" +fileName, 'r') as f:
+        file = f.read() 
+    soup = BeautifulSoup(file, 'xml')
+    variables = soup.find('unit').find_all('decl_stmt', recursive=False)
+    allVariables = []
+    for line in variables:
+        name = line.find('decl').find('name', recursive=False)
+        allVariables.append(name.text)
+    if len(allVariables) == 0:
+        return False
+    else:
+        return allVariables
