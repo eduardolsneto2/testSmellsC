@@ -1,3 +1,8 @@
+## Setup
+after cloning the repo do: 
+``git submodule init``
+``git submodule update``
+
 ## Test types:
 - [x] Assertion Roulette
 - [x] Conditional Test Logic
