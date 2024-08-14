@@ -1,6 +1,7 @@
 from testTypesCode import assertionRoulette, conditionalTestLogic, duplicateAssert, emptyTest, magicNumber, redundantPrint, redundantAssertion, unknownTest
 from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eagerTest, lazyTest, mysteryGuest, generalFixture, constructorInitialization
 from testTypesCode import resourceOptimism
+import glob, os
 
 # assertionRoulette.assertRule("cachedir.c.xml")
 # conditionalTestLogic.assertRule('decode_ecdsa_signature.c.xml')
@@ -18,4 +19,15 @@ from testTypesCode import resourceOptimism
 # mysteryGuest.assertRule("cachedir.c.xml")
 # generalFixture.assertRule("generalFixture.c.xml")
 # constructorInitialization.assertRule('constructorInitialization.c.xml')
-resourceOptimism.assertRule('resourceOptimism.c.xml')
+# resourceOptimism.assertRule('resourceOptimism.c.xml')
+allRepos = glob.glob("repos/*")
+for repo in allRepos:
+    print(repo)
+    if "XMLCode" in repo:
+        continue
+    os.system("mkdir ./" + repo + "XMLCode")
+    allfiles = glob.glob(repo + "/**/tests/**/*.c", recursive=True)
+    # print(allfiles)
+    for singleFile in allfiles:
+        path = os.path.basename(os.path.normpath(singleFile))
+        os.system("srcml " + singleFile + " -o " + repo + "XMLCode/" + path + ".xml")
