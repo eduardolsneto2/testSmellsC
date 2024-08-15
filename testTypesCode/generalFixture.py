@@ -7,8 +7,10 @@ def assertRule(fileName):
     print('---------')
     print('for File:' + fileName)
     setupBlock = xmlReader.getSetupBlock(fileName)
+    responseArray = []
     if setupBlock is False:
         print('não atende ao general Fixture')
+        responseArray.append(False)
     else: 
         variablesFromSetup = getAllVariableFromSetup(setupBlock)
         allBlocksAreOK = True
@@ -18,8 +20,11 @@ def assertRule(fileName):
                 allBlocksAreOK = False
         if allBlocksAreOK:
                 print('atende ao general Fixture')
+                responseArray.append(True)
         else:
                 print('não atende ao general Fixture')
+                responseArray.append(False)
+    return responseArray
 
 def getAllVariableFromSetup(setupBlock):
     expressions = setupBlock.find_all('expr_stmt')

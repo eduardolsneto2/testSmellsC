@@ -6,13 +6,16 @@ def assertRule(fileName):
     blocks = xmlReader.getCodeFromXmlFile(fileName)
     print('---------')
     print('for File:' + fileName)
+    responseArray = []
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
        text = 'bloco ' + str(index)
+       responseArray.append(response)
        if response:
             print(text + ' atende ao mystery guest')
        else:
             print(text + ' não atende ao mystery guest')
+    return responseArray
 
 def assertRuleForBlock(block):
     hasFileStatement = False

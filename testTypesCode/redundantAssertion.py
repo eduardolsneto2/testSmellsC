@@ -6,13 +6,16 @@ def assertRule(fileName):
     blocks = xmlReader.getCodeFromXmlFile(fileName)
     print('---------')
     print('for File:' + fileName)
+    responseArray = []
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
        text = 'bloco ' + str(index)
+       responseArray.append(response)
        if response:
             print(text + ' atende ao redundant assertion')
        else:
             print(text + ' não atende ao redundant assertion')
+    return responseArray
 
 def assertRuleForBlock(block):
     isAllEqual = False
@@ -23,15 +26,11 @@ def assertRuleForBlock(block):
             if 'assert' in name.text:
                 arguments = line.find_all('argument')
                 allValues = []
-                print('-------')
                 for argument in arguments:
                     value = argument.find(['literal', 'name'])
-                    print(value)
                     allValues.append(value)
                 if not isAllEqual and len(allValues) > 1:
                     isAllEqual = all_equal(allValues)
-                    print(all_equal(allValues))
-    print(not isAllEqual)
     return not isAllEqual
 
 def all_equal(iterator):

@@ -6,13 +6,16 @@ def assertRule(fileName):
     blocks = xmlReader.getCodeFromXmlFile(fileName)
     print('---------')
     print('for File:' + fileName)
+    responseArray = []
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
        text = 'bloco ' + str(index)
+       responseArray.append(response)
        if response:
             print(text + ' atende ao assertionRoulette')
        else:
             print(text + ' não atende ao assertionRoulette')
+    return responseArray
 
 def assertRuleForBlock(block):
     numberOfAsserts = 0
@@ -26,5 +29,4 @@ def assertRuleForBlock(block):
                 previousLine = line.find_previous_sibling()
                 if previousLine.name == 'comment':
                     numberOfCommentAboveAsserts += 1
-    print('number of asserts:' + str(numberOfAsserts) + ' // number of comments:' + str(numberOfCommentAboveAsserts))
     return (numberOfAsserts <= numberOfCommentAboveAsserts) or (numberOfAsserts <= 1)

@@ -6,15 +6,18 @@ def assertRule(fileName):
     blocks = xmlReader.getCodeFromXmlFile(fileName)
     print('---------')
     print('for File:' + fileName)
+    responseArray = []
     allExpressions = []
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
        allExpressions = allExpressions + response
-    print(allExpressions)
     if len(allExpressions) == len(set(allExpressions)):
         print('atende ao lazy Test')
+        responseArray.append(True)
     else:
         print('não atende ao lazy Test')
+        responseArray.append(False)
+    return responseArray
 
 def assertRuleForBlock(block):
     allExpressions = []

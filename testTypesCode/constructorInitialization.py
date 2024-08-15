@@ -8,16 +8,22 @@ def assertRule(fileName):
     print('for File:' + fileName)
     setupBlock = xmlReader.getSetupBlock(fileName)
     globalVals = xmlReader.getGlobalVariables(fileName)
+    responseArray = []
     if globalVals is False:
         print('atende ao Constructor Initialization')
+        responseArray.append(True)
     elif setupBlock is False:
         print('nao atende ao Constructor Initialization')
+        responseArray.append(False)
     else: 
         variablesFromSetup = getAllVariableFromSetup(setupBlock)
         if set(variablesFromSetup) == set(globalVals):
             print('atende ao Constructor Initialization')
+            responseArray.append(True)
         else:
             print('nao atende ao Constructor Initialization')
+            responseArray.append(False)
+    return responseArray
 
 def getAllVariableFromSetup(setupBlock):
     expressions = setupBlock.find_all('expr_stmt')
