@@ -28,7 +28,6 @@ def assertRuleForBlock(block):
         expressions = line.find_all('call')
         for expression in expressions:
             name = expression.find('name')
-            print('name:' + name.text)
             if 'access' in name.text:
                 hasAccess = True
             if name.text in allFilePossibilities:
@@ -36,8 +35,6 @@ def assertRuleForBlock(block):
     return isResourceOptimism(hasAccess, hasFileHandle)
 
 def isResourceOptimism(hasAccess, hasFileHandle):
-    print(hasAccess)
-    print(hasFileHandle)
     if hasFileHandle and hasAccess:
         return True
     elif not hasFileHandle:

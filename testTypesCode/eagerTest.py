@@ -15,7 +15,7 @@ def assertRule(fileName):
             print(text + ' atende ao eager Test')
        else:
             print(text + ' não atende ao eager Test')
-        return responseArray
+    return responseArray
 
 def assertRuleForBlock(block):
     numberOfExpressions = 0

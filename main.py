@@ -3,31 +3,52 @@ from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eage
 from testTypesCode import resourceOptimism
 import glob, os
 
-# assertionRoulette.assertRule("cachedir.c.xml")
-# conditionalTestLogic.assertRule('decode_ecdsa_signature.c.xml')
-# duplicateAssert.assertRule("cachedir.c.xml")
-# emptyTest.assertRule("cachedir_empty.c.xml")
-# magicNumber.assertRule("strip_pkcs1_2_padding.c.xml")
-# redundantPrint.assertRule("strip_pkcs1_2_padding_print.c.xml")
-# redundantAssertion.assertRule("cachedir.c.xml")
-# unknownTest.assertRule("cachedir.c.xml")
-# sensitiveEquality.assertRule("cachedir.c.xml")
-# sleepyTest.assertRule("cachedir.c.xml")
-# exceptionHandling.assertRule("cachedir.c.xml")
-# eagerTest.assertRule("cachedir.c.xml")
-# lazyTest.assertRule("cachedir_empty.c.xml")
-# mysteryGuest.assertRule("cachedir.c.xml")
-# generalFixture.assertRule("generalFixture.c.xml")
-# constructorInitialization.assertRule('constructorInitialization.c.xml')
-# resourceOptimism.assertRule('resourceOptimism.c.xml')
+def runAssertionForAllFiles(allFiles, repo):
+    assertionRouletteResponses = []
+    conditionalTestLogicResponses = []
+    duplicateAssertResponses = []
+    emptyTestResponses = []
+    magicNumberResponses = []
+    redundantPrintResponses = []
+    redundantAssertionResponses = []
+    unknownTestResponses = []
+    sensitiveEqualityResponses = []
+    sleepyTestResponses = []
+    exceptionHandlingResponses = []
+    eagerTestResponses = []
+    lazyTestResponses = []
+    mysteryGuestResponses = []
+    generalFixtureResponses = []
+    constructorInitializationResponses = []
+    resourceOptimismResponses = []
+    for singleFile in allFiles:
+        path = os.path.basename(os.path.normpath(singleFile))
+        xmlPath = repo + "XMLCode/" + path + ".xml"
+        os.system("srcml " + singleFile + " -o " + xmlPath)
+        assertionRouletteResponses.append(assertionRoulette.assertRule("./" + xmlPath))
+        assertionRouletteResponses.append(conditionalTestLogic.assertRule("./" + xmlPath))
+        duplicateAssertResponses.append(duplicateAssert.assertRule("./" + xmlPath))
+        emptyTestResponses.append(emptyTest.assertRule("./" + xmlPath))
+        magicNumberResponses.append(magicNumber.assertRule("./" + xmlPath))
+        redundantPrintResponses.append(redundantPrint.assertRule("./" + xmlPath))
+        redundantAssertionResponses.append(redundantAssertion.assertRule("./" + xmlPath))
+        unknownTestResponses.append(unknownTest.assertRule("./" + xmlPath))
+        sensitiveEqualityResponses.append(sensitiveEquality.assertRule("./" + xmlPath))
+        sleepyTestResponses.append(sleepyTest.assertRule("./" + xmlPath))
+        exceptionHandlingResponses.append(exceptionHandling.assertRule("./" + xmlPath))
+        eagerTestResponses.append(eagerTest.assertRule("./" + xmlPath))
+        lazyTestResponses.append(lazyTest.assertRule("./" + xmlPath))
+        mysteryGuestResponses.append(mysteryGuest.assertRule("./" + xmlPath))
+        generalFixtureResponses.append(generalFixture.assertRule("./" + xmlPath))
+        constructorInitializationResponses.append(constructorInitialization.assertRule("./" + xmlPath))
+        resourceOptimismResponses.append(resourceOptimism.assertRule("./" + xmlPath))
+
 allRepos = glob.glob("repos/*")
 for repo in allRepos:
     print(repo)
     if "XMLCode" in repo:
         continue
     os.system("mkdir ./" + repo + "XMLCode")
-    allfiles = glob.glob(repo + "/**/tests/**/*.c", recursive=True)
-    # print(allfiles)
-    for singleFile in allfiles:
-        path = os.path.basename(os.path.normpath(singleFile))
-        os.system("srcml " + singleFile + " -o " + repo + "XMLCode/" + path + ".xml")
+    allFiles = glob.glob(repo + "/**/tests/**/*.c", recursive=True)
+    runAssertionForAllFiles(allFiles, repo)
+

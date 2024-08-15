@@ -27,6 +27,6 @@ def assertRuleForBlock(block):
             if 'assert' in name.text:
                 numberOfAsserts += 1
                 previousLine = line.find_previous_sibling()
-                if previousLine.name == 'comment':
+                if previousLine is not None and previousLine.name == 'comment':
                     numberOfCommentAboveAsserts += 1
     return (numberOfAsserts <= numberOfCommentAboveAsserts) or (numberOfAsserts <= 1)

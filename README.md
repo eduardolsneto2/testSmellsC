@@ -1,6 +1,7 @@
 ## Setup
 after cloning the repo do: 
 ``git submodule init``
+then:
 ``git submodule update``
 
 ## Test types:

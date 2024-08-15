@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup, NavigableString
 
 def getBlocksFromXmlData(fileName):
-    with open("./testCodeExamples/" +fileName, 'r') as f:
+    with open(fileName, 'r') as f:
         file = f.read() 
     soup = BeautifulSoup(file, 'xml')
     functions = soup.find_all('function')
@@ -17,7 +17,7 @@ def getCodeFromXmlFile(fileName):
     return blocks
 
 def getSetupBlock(fileName):
-    with open("./testCodeExamples/" +fileName, 'r') as f:
+    with open(fileName, 'r') as f:
         file = f.read() 
     soup = BeautifulSoup(file, 'xml')
     functions = soup.find_all('function')
@@ -28,7 +28,7 @@ def getSetupBlock(fileName):
     return False
 
 def getGlobalVariables(fileName):
-    with open("./testCodeExamples/" +fileName, 'r') as f:
+    with open(fileName, 'r') as f:
         file = f.read() 
     soup = BeautifulSoup(file, 'xml')
     variables = soup.find('unit').find_all('decl_stmt', recursive=False)
