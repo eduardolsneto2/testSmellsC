@@ -1,3 +1,147 @@
 [submodule "repos/OpenSC"]
 	path = repos/OpenSC
 	url = https://github.com/OpenSC/OpenSC
+[submodule "repos/angband"]
+	path = repos/angband
+	url = https://github.com/angband/angband
+[submodule "repos/amxmodx"]
+	path = repos/amxmodx
+	url = https://github.com/alliedmodders/amxmodx
+[submodule "repos/ASF_MapReady"]
+	path = repos/ASF_MapReady
+	url = https://github.com/asfadmin/ASF_MapReady
+[submodule "repos/bash"]
+	path = repos/bash
+	url = https://github.com/bminor/bash
+[submodule "repos/libdb"]
+	path = repos/libdb
+	url = https://github.com/berkeleydb/libdb
+[submodule "repos/bison"]
+	path = repos/bison
+	url = https://github.com/akimd/bison
+[submodule "repos/busybox"]
+	path = repos/busybox
+	url = https://github.com/mirror/busybox
+[submodule "repos/webserver"]
+	path = repos/webserver
+	url = https://github.com/cherokee/webserver
+[submodule "repos/clamav"]
+	path = repos/clamav
+	url = https://github.com/Cisco-Talos/clamav
+[submodule "repos/collectd"]
+	path = repos/collectd
+	url = https://github.com/collectd/collectd
+[submodule "repos/curl"]
+	path = repos/curl
+	url = https://github.com/curl/curl
+[submodule "repos/ethersex"]
+	path = repos/ethersex
+	url = https://github.com/ethersex/ethersex
+[submodule "repos/freeradius-server"]
+	path = repos/freeradius-server
+	url = https://github.com/FreeRADIUS/freeradius-server
+[submodule "repos/gawk"]
+	path = repos/gawk
+	url = https://github.com/gvlx/gawk
+[submodule "repos/gcc"]
+	path = repos/gcc
+	url = https://github.com/gcc-mirror/gcc
+[submodule "repos/glibc"]
+	path = repos/glibc
+	url = https://github.com/bminor/glibc
+[submodule "repos/gnumeric"]
+	path = repos/gnumeric
+	url = https://github.com/GNOME/gnumeric
+[submodule "repos/gnuplot"]
+	path = repos/gnuplot
+	url = https://github.com/gnuplot/gnuplot
+[submodule "repos/irssi"]
+	path = repos/irssi
+	url = https://github.com/irssi/irssi
+[submodule "repos/hexchat"]
+	path = repos/hexchat
+	url = https://github.com/hexchat/hexchat
+[submodule "repos/libdsm"]
+	path = repos/libdsm
+	url = https://github.com/videolabs/libdsm
+[submodule "repos/libpng"]
+	path = repos/libpng
+	url = https://github.com/winlibs/libpng
+[submodule "repos/libsoup"]
+	path = repos/libsoup
+	url = https://github.com/GNOME/libsoup
+[submodule "repos/libssh-mirror"]
+	path = repos/libssh-mirror
+	url = https://github.com/libssh/libssh-mirror
+[submodule "repos/libxml2"]
+	path = repos/libxml2
+	url = https://github.com/GNOME/libxml2
+[submodule "repos/linux"]
+	path = repos/linux
+	url = https://github.com/torvalds/linux
+[submodule "repos/gnu-m4"]
+	path = repos/gnu-m4
+	url = https://github.com/tar-mirror/gnu-m4
+[submodule "repos/machinekit"]
+	path = repos/machinekit
+	url = https://github.com/machinekit/machinekit
+[submodule "repos/MapServer"]
+	path = repos/MapServer
+	url = https://github.com/MapServer/MapServer
+[submodule "repos/openssl"]
+	path = repos/openssl
+	url = https://github.com/openssl/openssl
+[submodule "repos/openvpn"]
+	path = repos/openvpn
+	url = https://github.com/OpenVPN/openvpn
+[submodule "repos/ossec-hids"]
+	path = repos/ossec-hids
+	url = https://github.com/ossec/ossec-hids
+[submodule "repos/pacemaker"]
+	path = repos/pacemaker
+	url = https://github.com/ClusterLabs/pacemaker
+[submodule "repos/prc-tools-remix"]
+	path = repos/prc-tools-remix
+	url = https://github.com/jichu4n/prc-tools-remix
+[submodule "repos/privoxy"]
+	path = repos/privoxy
+	url = https://github.com/unisx/privoxy
+[submodule "repos/RetroArch"]
+	path = repos/RetroArch
+	url = https://github.com/libretro/RetroArch
+[submodule "repos/sleuthkit"]
+	path = repos/sleuthkit
+	url = https://github.com/sleuthkit/sleuthkit
+[submodule "repos/sqlite"]
+	path = repos/sqlite
+	url = https://github.com/sqlite/sqlite
+[submodule "repos/syslog-ng"]
+	path = repos/syslog-ng
+	url = https://github.com/syslog-ng/syslog-ng
+[submodule "repos/sylpheed"]
+	path = repos/sylpheed
+	url = https://github.com/sylpheed-mail/sylpheed
+[submodule "repos/TauLabs"]
+	path = repos/TauLabs
+	url = https://github.com/TauLabs/TauLabs
+[submodule "repos/tk"]
+	path = repos/tk
+	url = https://github.com/tcltk/tk
+[submodule "repos/totem"]
+	path = repos/totem
+	url = https://github.com/GNOME/totem
+[submodule "repos/uwsgi"]
+	path = repos/uwsgi
+	url = https://github.com/unbit/uwsgi
+[submodule "repos/wiredtiger"]
+	path = repos/wiredtiger
+	url = https://github.com/wiredtiger/wiredtiger
+[submodule "repos/xfig"]
+	path = repos/xfig
+	url = https://github.com/hhoeflin/xfig
+[submodule "repos/xorg-server"]
+	path = repos/xorg-server
+	url = https://github.com/XQuartz/xorg-server
+[submodule "repos/xterm"]
+	path = repos/xterm
+	url = https://github.com/joejulian/xterm
