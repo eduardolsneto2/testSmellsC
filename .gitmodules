@@ -76,9 +76,6 @@
 [submodule "repos/libxml2"]
 	path = repos/libxml2
 	url = https://github.com/GNOME/libxml2
-[submodule "repos/linux"]
-	path = repos/linux
-	url = https://github.com/torvalds/linux
 [submodule "repos/gnu-m4"]
 	path = repos/gnu-m4
 	url = https://github.com/tar-mirror/gnu-m4
