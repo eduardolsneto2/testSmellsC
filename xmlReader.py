@@ -23,7 +23,7 @@ def getSetupBlock(fileName):
     functions = soup.find_all('function')
     for function in functions:
         name = function.find('name', recursive=False)
-        if 'setup' in name.text:
+        if name is not None and 'setup' in name.text:
             return function.find('block_content')
     return False
 
@@ -35,7 +35,7 @@ def getGlobalVariables(fileName):
     allVariables = []
     for line in variables:
         name = line.find('decl').find('name', recursive=False)
-        if name.text is not None:
+        if name is not None:
             allVariables.append(name.text)
     if len(allVariables) == 0:
         return False
