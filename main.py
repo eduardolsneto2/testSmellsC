@@ -116,7 +116,7 @@ for repo in allRepos:
     allFiles = glob.glob(repo + "/**/*test*/**/*.c", recursive=True)
     # print(allFiles)
     response = runAssertionForAllFiles(allFiles, repo)
-    if response is not []:
+    if response is not None:
         sheet.append(response)
 workbook.save("results.xlsx")
 
