@@ -85,27 +85,27 @@ def runAssertionForAllFiles(allFiles, repo):
     return response
 
 workbook = openpyxl.Workbook()
-    sheet = workbook.active
-    sheet.append([
-     "",
-     "AssertionRoulette", 
-     "conditionalTestLogic", 
-     "duplicateAssert", 
-     "emptyTest", 
-     "magicNumber", 
-     "redundantPrint",
-     "redundantAssertion",
-     "unknownTest",
-     "sensitiveEquality",
-     "sleepyTest",
-     "exceptionHandling",
-     "eagerTest",
-     "lazyTest",
-     "mysteryGuest",
-     "generalFixture",
-     "constructorInitialization",
-     "resourceOptimism"
-     ])
+sheet = workbook.active
+sheet.append([
+    "",
+    "AssertionRoulette", 
+    "conditionalTestLogic", 
+    "duplicateAssert", 
+    "emptyTest", 
+    "magicNumber", 
+    "redundantPrint",
+    "redundantAssertion",
+    "unknownTest",
+    "sensitiveEquality",
+    "sleepyTest",
+    "exceptionHandling",
+    "eagerTest",
+    "lazyTest",
+    "mysteryGuest",
+    "generalFixture",
+    "constructorInitialization",
+    "resourceOptimism"
+    ])
 
 allRepos = glob.glob("repos/*")
 for repo in allRepos:
