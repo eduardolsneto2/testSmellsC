@@ -2,6 +2,8 @@ from testTypesCode import assertionRoulette, conditionalTestLogic, duplicateAsse
 from testTypesCode import sensitiveEquality, sleepyTest, exceptionHandling, eagerTest, lazyTest, mysteryGuest, generalFixture, constructorInitialization
 from testTypesCode import resourceOptimism
 import glob, os
+import openpyxl
+import pandas as pd
 
 def runAssertionForAllFiles(allFiles, repo):
     assertionRouletteResponses = []
@@ -21,6 +23,7 @@ def runAssertionForAllFiles(allFiles, repo):
     generalFixtureResponses = []
     constructorInitializationResponses = []
     resourceOptimismResponses = []
+    response = []
     if len(allFiles) == 0:
         return
     for singleFile in allFiles:
@@ -62,6 +65,47 @@ def runAssertionForAllFiles(allFiles, repo):
     print("constructorInitializationResponses: " + str(constructorInitializationResponses.count(True)/len(constructorInitializationResponses)))
     print("resourceOptimismResponses: " + str(resourceOptimismResponses.count(True)/len(resourceOptimismResponses)))
     print("-----------------------------------------")
+    response.append(assertionRouletteResponses.count(True)/len(assertionRouletteResponses))
+    response.append(conditionalTestLogicResponses.count(True)/len(conditionalTestLogicResponses))
+    response.append(duplicateAssertResponses.count(True)/len(duplicateAssertResponses))
+    response.append(emptyTestResponses.count(True)/len(emptyTestResponses))
+    response.append(magicNumberResponses.count(True)/len(magicNumberResponses))
+    response.append(redundantPrintResponses.count(True)/len(redundantPrintResponses))
+    response.append(redundantAssertionResponses.count(True)/len(redundantAssertionResponses))
+    response.append(unknownTestResponses.count(True)/len(unknownTestResponses))
+    response.append(sensitiveEqualityResponses.count(True)/len(sensitiveEqualityResponses))
+    response.append(sleepyTestResponses.count(True)/len(sleepyTestResponses))
+    response.append(exceptionHandlingResponses.count(True)/len(exceptionHandlingResponses))
+    response.append(eagerTestResponses.count(True)/len(eagerTestResponses))
+    response.append(lazyTestResponses.count(True)/len(lazyTestResponses))
+    response.append(mysteryGuestResponses.count(True)/len(mysteryGuestResponses))
+    response.append(generalFixtureResponses.count(True)/len(generalFixtureResponses))
+    response.append(constructorInitializationResponses.count(True)/len(constructorInitializationResponses))
+    response.append(resourceOptimismResponses.count(True)/len(resourceOptimismResponses))
+    return response
+
+workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.append([
+     "",
+     "AssertionRoulette", 
+     "conditionalTestLogic", 
+     "duplicateAssert", 
+     "emptyTest", 
+     "magicNumber", 
+     "redundantPrint",
+     "redundantAssertion",
+     "unknownTest",
+     "sensitiveEquality",
+     "sleepyTest",
+     "exceptionHandling",
+     "eagerTest",
+     "lazyTest",
+     "mysteryGuest",
+     "generalFixture",
+     "constructorInitialization",
+     "resourceOptimism"
+     ])
 
 allRepos = glob.glob("repos/*")
 for repo in allRepos:
@@ -71,5 +115,7 @@ for repo in allRepos:
     os.system("mkdir ./" + repo + "XMLCode")
     allFiles = glob.glob(repo + "/**/*test*/**/*.c", recursive=True)
     # print(allFiles)
-    runAssertionForAllFiles(allFiles, repo)
+    response = runAssertionForAllFiles(allFiles, repo)
+    sheet.append(response)
+workbook.save("results.xlsx")
 

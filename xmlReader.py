@@ -35,7 +35,8 @@ def getGlobalVariables(fileName):
     allVariables = []
     for line in variables:
         name = line.find('decl').find('name', recursive=False)
-        allVariables.append(name.text)
+        if name.text is not None:
+            allVariables.append(name.text)
     if len(allVariables) == 0:
         return False
     else:
