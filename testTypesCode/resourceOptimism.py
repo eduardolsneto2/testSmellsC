@@ -29,7 +29,7 @@ def assertRuleForBlock(block):
             expressions = line.find_all('call')
             for expression in expressions:
                 name = expression.find('name')
-                if 'access' in name.text:
+                if name is not None and 'access' in name.text:
                     hasAccess = True
                 if name.text in allFilePossibilities:
                     hasFileHandle = True

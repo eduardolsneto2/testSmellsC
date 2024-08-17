@@ -43,9 +43,6 @@
 [submodule "repos/gawk"]
 	path = repos/gawk
 	url = https://github.com/gvlx/gawk
-[submodule "repos/gcc"]
-	path = repos/gcc
-	url = https://github.com/gcc-mirror/gcc
 [submodule "repos/glibc"]
 	path = repos/glibc
 	url = https://github.com/bminor/glibc
