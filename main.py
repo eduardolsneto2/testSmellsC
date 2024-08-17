@@ -117,6 +117,6 @@ for repo in allRepos:
     # print(allFiles)
     response = runAssertionForAllFiles(allFiles, repo)
     if response is not None:
-        sheet.append(response)
+        sheet.append([""] + response)
 workbook.save("results.xlsx")
 
