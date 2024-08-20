@@ -11,18 +11,18 @@ def assertRule(fileName):
     responseArray = []
     if globalVals is False:
         # print('atende ao Constructor Initialization')
-        responseArray.append(True)
+        responseArray.append(False)
     elif setupBlock is False:
         # print('nao atende ao Constructor Initialization')
-        responseArray.append(False)
+        responseArray.append(True)
     else: 
         variablesFromSetup = getAllVariableFromSetup(setupBlock)
         if set(variablesFromSetup) == set(globalVals):
             # print('atende ao Constructor Initialization')
-            responseArray.append(True)
+            responseArray.append(False)
         else:
             # print('nao atende ao Constructor Initialization')
-            responseArray.append(False)
+            responseArray.append(True)
     return responseArray
 
 def getAllVariableFromSetup(setupBlock):

@@ -13,10 +13,10 @@ def assertRule(fileName):
        allExpressions = allExpressions + response
     if len(allExpressions) == len(set(allExpressions)):
         # print('atende ao lazy Test')
-        responseArray.append(True)
+        responseArray.append(False)
     else:
         # print('não atende ao lazy Test')
-        responseArray.append(False)
+        responseArray.append(True)
     return responseArray
 
 def assertRuleForBlock(block):

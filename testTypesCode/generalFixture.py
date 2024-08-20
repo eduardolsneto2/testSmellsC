@@ -10,7 +10,7 @@ def assertRule(fileName):
     responseArray = []
     if setupBlock is False:
         # print('não atende ao general Fixture')
-        responseArray.append(False)
+        responseArray.append(True)
     else: 
         variablesFromSetup = getAllVariableFromSetup(setupBlock)
         allBlocksAreOK = True
@@ -20,10 +20,10 @@ def assertRule(fileName):
                 allBlocksAreOK = False
         if allBlocksAreOK:
                 # print('atende ao general Fixture')
-                responseArray.append(True)
+                responseArray.append(False)
         else:
                 # print('não atende ao general Fixture')
-                responseArray.append(False)
+                responseArray.append(True)
     return responseArray
 
 def getAllVariableFromSetup(setupBlock):

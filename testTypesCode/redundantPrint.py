@@ -10,7 +10,7 @@ def assertRule(fileName):
     for index, block in enumerate(blocks):
        response = assertRuleForBlock(block)
        text = 'bloco ' + str(index)
-       responseArray.append(response)
+       responseArray.append(not response)
     #    if response:
     #         print(text + ' atende ao redundant print')
     #    else:
