@@ -65,119 +65,119 @@ def runAssertionForAllFiles(allFiles, repo, allFilesSheet):
         if True in assertionRouletterResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(assertionRouletterResponse))
         conditionalTestLogicResponse = conditionalTestLogic.assertRule("./" + xmlPath)
         conditionalTestLogicResponses += conditionalTestLogicResponse
         if True in conditionalTestLogicResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(conditionalTestLogicResponse))
         duplicateAssertResponse = duplicateAssert.assertRule("./" + xmlPath)
         duplicateAssertResponses += duplicateAssertResponse
         if True in duplicateAssertResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(duplicateAssertResponse))
         emptyTestResponse = emptyTest.assertRule("./" + xmlPath)
         emptyTestResponses += emptyTestResponse
         if True in emptyTestResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(emptyTestResponse))
         magicNumberResponse = magicNumber.assertRule("./" + xmlPath)
         magicNumberResponses += magicNumberResponse
         if True in magicNumberResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(magicNumberResponse))
         redundantPrintResponse = redundantPrint.assertRule("./" + xmlPath)
         redundantPrintResponses += redundantPrintResponse
         if True in redundantPrintResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(redundantPrintResponse))
         redundantAssertionResponse = redundantAssertion.assertRule("./" + xmlPath)
         redundantAssertionResponses += redundantAssertionResponse
         if True in redundantAssertionResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(redundantAssertionResponse))
         unknownTestResponse = unknownTest.assertRule("./" + xmlPath)
         unknownTestResponses += unknownTestResponse
         if True in unknownTestResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(unknownTestResponse))
         sensitiveEqualityResponse = sensitiveEquality.assertRule("./" + xmlPath)
         sensitiveEqualityResponses += sensitiveEqualityResponse
         if True in sensitiveEqualityResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(sensitiveEqualityResponse))
         sleepyTestResponse = sleepyTest.assertRule("./" + xmlPath)
         sleepyTestResponses += sleepyTestResponse
         if True in sleepyTestResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(sleepyTestResponse))
         exceptionHandlingResponse = exceptionHandling.assertRule("./" + xmlPath)
         exceptionHandlingResponses += exceptionHandlingResponse
         if True in exceptionHandlingResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(exceptionHandlingResponse))
         eagerTestResponse = eagerTest.assertRule("./" + xmlPath)
         eagerTestResponses += eagerTestResponse
         if True in eagerTestResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(eagerTestResponse))
         lazyTestResponse = lazyTest.assertRule("./" + xmlPath)
         lazyTestResponses += lazyTestResponse
         if True in lazyTestResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(lazyTestResponse))
         mysteryGuestResponse = mysteryGuest.assertRule("./" + xmlPath)
         mysteryGuestResponses += mysteryGuestResponse
         if True in mysteryGuestResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(mysteryGuestResponse))
         generalFixtureResponse = generalFixture.assertRule("./" + xmlPath)
         generalFixtureResponses += generalFixtureResponse
         if True in generalFixtureResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(generalFixtureResponse))
         constructorInitializationResponse = constructorInitialization.assertRule("./" + xmlPath)
         constructorInitializationResponses += constructorInitializationResponse
         if True in constructorInitializationResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(constructorInitializationResponse))
         resourceOptimismResponse = resourceOptimism.assertRule("./" + xmlPath)
         resourceOptimismResponses += resourceOptimismResponse
         if True in resourceOptimismResponse:
             lineFiles.append('NA')
         else:
-            lineFiles.append(repo + '/' + path)
+            lineFiles.append(singleFile)
         line.append(len(resourceOptimismResponse))
         sheetFile.append(line)
         allFilesSheet.append(lineFiles)
